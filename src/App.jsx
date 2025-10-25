@@ -13,6 +13,7 @@ import Feedback from './pages/Feedback';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 import './App.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/check-in" element={<QRScanAttendance />} />
         <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
         <Route path="/" element={<Login />} />
