@@ -31,7 +31,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <aside className="w-64 h-screen flex flex-col border-r border-[var(--color-border)] bg-[var(--color-main)] overflow-hidden">
+    <aside className="fixed left-0 top-0 w-64 h-screen flex flex-col border-r border-[var(--color-border)] bg-[var(--color-main)] overflow-hidden z-10">
       {/* Top section: Logo and Nav */}
       <div className="flex-1">
         {/* Logo Section */}
