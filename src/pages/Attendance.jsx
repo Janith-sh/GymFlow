@@ -1,5 +1,6 @@
 import React from 'react';
 import { Edit3, FileText } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // --- Data Structure for the Table (Mock Data) ---
 const attendanceData = [
@@ -107,6 +108,12 @@ const StatCard = ({ title, value, subValue, highlight }) => (
 );
 
 const Attendance = () => {
+  const navigate = useNavigate();
+
+  const handleGenerateReport = () => {
+    navigate('/attendance/report');
+  };
+
   return (
     <div className="space-y-6">
       {/* Header Section */}
@@ -115,7 +122,10 @@ const Attendance = () => {
           <h1 className="text-2xl font-bold text-[var(--color-primary)] mb-2">Attendance Tracking</h1>
           <p className="text-[var(--color-secondary)]">Track and manage all attendance of members</p>
         </div>
-        <button className="flex items-center space-x-2 bg-[var(--color-primary)] text-[var(--color-font-main)] px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
+        <button 
+          onClick={handleGenerateReport}
+          className="flex items-center space-x-2 bg-[var(--color-primary)] text-[var(--color-font-main)] px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity"
+        >
           <FileText className="w-4 h-4" />
           <span>Generate Report</span>
         </button>
