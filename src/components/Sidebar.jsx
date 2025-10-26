@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
@@ -16,7 +16,7 @@ import {
 
 // Main navigation items
 const navItems = [
-  { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
+  { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
   { name: 'Members', icon: Users, path: '/members' },
   { name: 'Trainers', icon: UserRound, path: '/trainers' },
   { name: 'Payments', icon: CreditCard, path: '/payments' },
@@ -29,6 +29,16 @@ const navItems = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear any stored user data (if you add localStorage later)
+    // localStorage.removeItem('user');
+    // localStorage.removeItem('token');
+    
+    // Redirect to login page
+    navigate('/login');
+  };
 
   return (
     <aside className="fixed left-0 top-0 w-64 h-screen flex flex-col border-r border-[var(--color-border)] bg-[var(--color-main)] overflow-hidden z-10">
@@ -85,7 +95,10 @@ const Sidebar = () => {
         </div>
         
         {/* Logout Button */}
-        <button className="flex items-center justify-center space-x-2 w-full p-2 rounded-lg border bg-[var(--color-inactive)] text-[var(--color-secondary)] border-[var(--color-inactive)] hover:bg-[var(--color-secondary)] hover:text-[var(--color-font-main)]">
+        <button 
+          onClick={handleLogout}
+          className="flex items-center justify-center space-x-2 w-full p-2 rounded-lg border bg-[var(--color-inactive)] text-[var(--color-secondary)] border-[var(--color-inactive)] hover:bg-[var(--color-secondary)] hover:text-[var(--color-font-main)] transition-colors duration-200"
+        >
           <LogOut className="w-4 h-4" />
           <span className="text-sm font-medium">Logout</span>
         </button>

@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Members from './pages/Members';
 import Trainers from './pages/Trainers';
+import TrainerPerformance from './pages/TrainerPerformance';
 import Payments from './pages/Payments';
 import Attendance from './pages/Attendance';
 import AttendanceReport from './pages/AttendanceReport';
@@ -13,6 +14,7 @@ import Feedback from './pages/Feedback';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 import './App.css';
 
 function App() {
@@ -21,10 +23,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/check-in" element={<QRScanAttendance />} />
-        <Route path="/" element={<Layout><Dashboard /></Layout>} />
+        <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+        <Route path="/" element={<Login />} />
         <Route path="/members" element={<Layout><Members /></Layout>} />
         <Route path="/trainers" element={<Layout><Trainers /></Layout>} />
+        <Route path="/trainers/performance" element={<Layout><TrainerPerformance /></Layout>} />
         <Route path="/payments" element={<Layout><Payments /></Layout>} />
         <Route path="/attendance" element={<Layout><Attendance /></Layout>} />
         <Route path="/attendance/report" element={<Layout><AttendanceReport /></Layout>} />
