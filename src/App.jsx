@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Members from './pages/Members';
 import Trainers from './pages/Trainers';
+import TrainerPerformance from './pages/TrainerPerformance';
 import Payments from './pages/Payments';
 import Attendance from './pages/Attendance';
 import AttendanceReport from './pages/AttendanceReport';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/members" element={<Layout><Members /></Layout>} />
         <Route path="/trainers" element={<Layout><Trainers /></Layout>} />
+        <Route path="/trainers/performance" element={<Layout><TrainerPerformance /></Layout>} />
         <Route path="/payments" element={<Layout><Payments /></Layout>} />
         <Route path="/attendance" element={<Layout><Attendance /></Layout>} />
         <Route path="/attendance/report" element={<Layout><AttendanceReport /></Layout>} />
