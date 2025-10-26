@@ -101,9 +101,7 @@ const Trainers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isAssignMembersModalOpen, setIsAssignMembersModalOpen] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
-  const [activeTab, setActiveTab] = useState('trainers');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -112,7 +110,6 @@ const Trainers = () => {
     experience: '',
     status: 'Active',
   });
-  const [trainerAssignedMembers, setTrainerAssignedMembers] = useState({});
 
   const filteredTrainers = trainers.filter(trainer =>
     trainer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -155,35 +152,6 @@ const Trainers = () => {
 
   const handleDeleteTrainer = (trainerName) => {
     setTrainers(trainers.filter(t => t.name !== trainerName));
-  };
-
-  const handleOpenAssignMembersModal = (trainer) => {
-    setSelectedTrainer(trainer);
-    setIsAssignMembersModalOpen(true);
-  };
-
-  const handleAssignMember = (memberName) => {
-    if (!trainerAssignedMembers[selectedTrainer.name]) {
-      setTrainerAssignedMembers({
-        ...trainerAssignedMembers,
-        [selectedTrainer.name]: []
-      });
-    }
-    const members = trainerAssignedMembers[selectedTrainer.name] || [];
-    if (!members.includes(memberName)) {
-      setTrainerAssignedMembers({
-        ...trainerAssignedMembers,
-        [selectedTrainer.name]: [...members, memberName]
-      });
-    }
-  };
-
-  const handleRemoveMember = (memberName) => {
-    const members = trainerAssignedMembers[selectedTrainer.name] || [];
-    setTrainerAssignedMembers({
-      ...trainerAssignedMembers,
-      [selectedTrainer.name]: members.filter(m => m !== memberName)
-    });
   };
 
   return (
@@ -231,44 +199,12 @@ const Trainers = () => {
         </button>
       </div>
 
-      {/* View Assigned Members Button */}
-      <div className="flex justify-end">
-        <button className="bg-[var(--color-primary)] text-[var(--color-main)] px-6 py-2 rounded-lg hover:opacity-90 transition-opacity">
-          View assigned members
-        </button>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex gap-6 border-b border-[var(--color-border)]">
-        <button
-          onClick={() => setActiveTab('trainers')}
-          className={`pb-3 px-2 font-medium transition-colors ${
-            activeTab === 'trainers'
-              ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]'
-              : 'text-[var(--color-secondary)] hover:text-[var(--color-primary)]'
-          }`}
-        >
-          Trainer
-        </button>
-        <button
-          onClick={() => setActiveTab('members')}
-          className={`pb-3 px-2 font-medium transition-colors ${
-            activeTab === 'members'
-              ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]'
-              : 'text-[var(--color-secondary)] hover:text-[var(--color-primary)]'
-          }`}
-        >
-          Assigned Members
-        </button>
-      </div>
-
       {/* Trainers Tab Content */}
-      {activeTab === 'trainers' && (
-        <div className="bg-[var(--color-main)] rounded-lg shadow-sm border border-[var(--color-border)]">
-          {/* Full Name Header */}
-          <div className="px-6 py-4 border-b border-[var(--color-border)]">
-            <h3 className="text-[var(--color-primary)] font-semibold">All Trainers</h3>
-          </div>
+      <div className="bg-[var(--color-main)] rounded-lg shadow-sm border border-[var(--color-border)]">
+        {/* Full Name Header */}
+        <div className="px-6 py-4 border-b border-[var(--color-border)]">
+          <h3 className="text-[var(--color-primary)] font-semibold">All Trainers</h3>
+        </div>
 
           {/* Table */}
           <div className="overflow-x-auto">
@@ -352,50 +288,6 @@ const Trainers = () => {
             </table>
           </div>
         </div>
-      )}
-
-      {/* Assigned Members Tab Content */}
-      {activeTab === 'members' && (
-        <div className="bg-[var(--color-main)] rounded-lg shadow-sm border border-[var(--color-border)]">
-          <div className="px-6 py-4 border-b border-[var(--color-border)]">
-            <h3 className="text-[var(--color-primary)] font-semibold">Assigned Members</h3>
-          </div>
-          
-          <div className="p-6">
-            <div className="space-y-4">
-              {trainers.map((trainer, index) => (
-                <div key={index} className="flex items-center justify-between p-4 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-inactive)] transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-main)] font-semibold">
-                      {trainer.initials}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-[var(--color-primary)]">{trainer.name}</h4>
-                      <p className="text-sm text-[var(--color-secondary)]">{trainer.specialization}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {[
-                      { name: 'Sarah Anderson', initials: 'SA' },
-                      { name: 'Mike Smith', initials: 'MS' },
-                      { name: 'Jessica Brown', initials: 'JB' },
-                      { name: 'David Wilson', initials: 'DW' },
-                      { name: 'Emily Taylor', initials: 'ET' },
-                    ].slice(0, Math.floor(Math.random() * 5) + 2).map((member, i) => (
-                      <div key={i} className="px-3 py-1 bg-[var(--color-inactive)] text-[var(--color-primary)] rounded-full text-xs font-medium">
-                        {member.name}
-                      </div>
-                    ))}
-                    <button onClick={() => handleOpenAssignMembersModal(trainer)} className="text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors ml-2">
-                      <Edit className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Add/Edit Trainer Modal */}
       {(isAddModalOpen || isEditModalOpen) && (
@@ -512,95 +404,6 @@ const Trainers = () => {
                 className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-main)] rounded-lg hover:opacity-90 transition-opacity"
               >
                 Save Trainer
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Assign Members Modal */}
-      {isAssignMembersModalOpen && selectedTrainer && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[var(--color-main)] rounded-lg p-6 w-full max-w-md shadow-lg">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-[var(--color-primary)]">
-                Assign Members to {selectedTrainer.name}
-              </h2>
-              <button
-                onClick={() => setIsAssignMembersModalOpen(false)}
-                className="text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-[var(--color-primary)] mb-2">
-                  Available Members
-                </label>
-                <div className="space-y-2 max-h-60 overflow-y-auto">
-                  {[
-                    { id: 1, name: 'Sarah Anderson' },
-                    { id: 2, name: 'Mike Smith' },
-                    { id: 3, name: 'Jessica Brown' },
-                    { id: 4, name: 'David Wilson' },
-                    { id: 5, name: 'Emily Taylor' },
-                    { id: 6, name: 'John Davis' },
-                    { id: 7, name: 'Lisa Johnson' },
-                    { id: 8, name: 'Robert Martinez' },
-                  ].map((member) => (
-                    <label key={member.id} className="flex items-center gap-3 p-2 hover:bg-[var(--color-inactive)] rounded-lg cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={(trainerAssignedMembers[selectedTrainer.name] || []).includes(member.name)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            handleAssignMember(member.name);
-                          } else {
-                            handleRemoveMember(member.name);
-                          }
-                        }}
-                        className="w-4 h-4 accent-[var(--color-primary)]"
-                      />
-                      <span className="text-[var(--color-primary)] font-medium">{member.name}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[var(--color-primary)] mb-2">
-                  Selected Members ({(trainerAssignedMembers[selectedTrainer.name] || []).length})
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {(trainerAssignedMembers[selectedTrainer.name] || []).map((member, index) => (
-                    <span key={index} className="px-3 py-1 bg-[var(--color-primary)] text-[var(--color-main)] rounded-full text-sm font-medium flex items-center gap-2">
-                      {member}
-                      <button
-                        onClick={() => handleRemoveMember(member)}
-                        className="hover:opacity-75"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => setIsAssignMembersModalOpen(false)}
-                className="px-4 py-2 border border-[var(--color-border)] text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-inactive)] transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setIsAssignMembersModalOpen(false)}
-                className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-main)] rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Save Members
               </button>
             </div>
           </div>

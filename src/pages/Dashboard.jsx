@@ -1,9 +1,11 @@
 import React from 'react';
-import { Users, UserCheck, DollarSign, TrendingUp, TrendingDown, Clock, CreditCard, Calendar, Plus, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
+import { Users, UserCheck, DollarSign, TrendingUp, TrendingDown, Clock, CreditCard, Calendar, Plus, FileText, Settings as SettingsIcon, BarChart3, QrCode } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   // Sample data for the chart
   const chartData = [
     { month: 'Jan', members: 35000, revenue: 30000 },
@@ -124,6 +126,13 @@ const Dashboard = () => {
           
           {/* Quick Action Buttons */}
           <div className="flex space-x-3">
+            <button
+              onClick={() => navigate('/check-in')}
+              className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <QrCode className="w-4 h-4 mr-2" />
+              QR Check-In
+            </button>
             <Link
               to="/members"
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
